@@ -1,0 +1,15 @@
+{
+  "facts": [
+    {
+      "id": "1",
+      "status": "APPROVED",
+      "message": "Viníccius13 não usa relógio. Ele decide que horas são.",
+      "author": {
+        "username": "tilnoene",
+        "url": null
+      },
+      "created_at": "Wed Jul 20 2022 21:25:31 GMT-0300",
+      "updated_at": "Wed Jul 20 2022 21:25:31 GMT-0300"
+    }
+  ]
+}
