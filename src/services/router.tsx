@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+import Home from '../pages/Home';
+
 const AdminRoute = ({ children = null }: { children?: JSX.Element | null }) => {
   const { access_token } = { access_token: null };
 
@@ -13,9 +15,9 @@ const AdminRoute = ({ children = null }: { children?: JSX.Element | null }) => {
 const Router = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<div>Página Inicial</div>} />
+      <Route path="/" element={<Home />} />
 
-      <Route path="/:id" element={<div>Página Inicial com ID</div>} />
+      <Route path="/login" element={<div>Login</div>} />
 
       <Route path="*" element={<div>NotFoundPage</div>} />
     </Routes>
