@@ -1,12 +1,11 @@
-import { ContainerFact, SecondayText } from './styles';
+import { ContainerFact, PrimaryText, SecondayText } from './styles';
 
 // ❝ “ ” ‟ ❝ ❞
 
-const Fact = ({ fact }: { fact: any }) => {
+const FactQuote = ({ fact }: { fact: any }) => {
   return (
     <ContainerFact>
-      <p style={{fontSize: '100px'}}>❝</p>
-      {fact.message}
+      <PrimaryText>{fact.message}</PrimaryText>
 
       {fact.author.url ? (
         <a target="_blank" rel="noreferrer" href={fact.author.username}>
@@ -19,4 +18,4 @@ const Fact = ({ fact }: { fact: any }) => {
   );
 };
 
-export default Fact;
+export default FactQuote;
