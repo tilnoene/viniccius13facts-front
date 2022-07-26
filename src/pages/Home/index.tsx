@@ -3,12 +3,31 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Fact from '../../components/Fact';
+import Button from '../../components/Button';
+import FactQuote from '../../components/FactQuote';
 
 import api from '../../services/api';
 import { toastOptions } from '../../services/utils';
 
-import { ContainerPage } from './styles';
+import ShareIcon from '@mui/icons-material/Share';
+import TungstenIcon from '@mui/icons-material/Tungsten';
+import BugReportIcon from '@mui/icons-material/BugReport';
+
+import TwitterIcon from '@mui/icons-material/Twitter';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TelegramIcon from '@mui/icons-material/Telegram';
+
+import {
+  ContainerButtons,
+  ContainerFact,
+  ContainerPage,
+  ContainerShareButtons,
+} from './styles';
+import { Modal, Skeleton } from '@mui/material';
+import { Box } from '@mui/system';
+import SubmitFactForm from '../../components/SubmitFactForm';
+import SubmitBugForm from '../../components/SubmitBugForm';
 
 type Status = 'PENDING' | 'APPROVED' | 'DENIED';
 
@@ -27,6 +46,18 @@ type Fact = {
   updated_at?: string;
 };
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 'fit-content',
+  maxWidth: '400px',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -35,6 +66,18 @@ const Home = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [fact, setFact] = useState<Fact | undefined>();
 
+  const [openShare, setOpenShare] = useState<boolean>(false);
+  const handleOpenShare = () => setOpenShare(true);
+  const handleCloseShare = () => setOpenShare(false);
+
+  const [submitFact, setSubmitFact] = useState<boolean>(false);
+  const handleOpenSubmitFact = () => setSubmitFact(true);
+  const handleCloseSubmitFact = () => setSubmitFact(false);
+
+  const [openBugReport, setOpenBugReport] = useState<boolean>(false);
+  const handleOpenBugReport = () => setOpenBugReport(true);
+  const handleCloseBugReport = () => setOpenBugReport(false);
+
   const getRandomFact = async () => {
     api
       .get('/random_fact')
@@ -42,12 +85,12 @@ const Home = () => {
         const apiFact = response.data;
 
         setFact(apiFact);
-        window.history.pushState('', '', `?fact=${apiFact.id}`);
+        // window.history.pushState('', '', `?fact=${apiFact.id}`); // adicionar o id do fato na URL
 
         setLoading(false);
       })
       .catch(() => {
-        // navigate('/erro');
+        navigate('/erro');
 
         toast.error(
           'Ocorreu um erro ao gerar um fato aleatório! Reinicie a página ou reporte o bug.',
@@ -65,13 +108,23 @@ const Home = () => {
         setLoading(false);
       })
       .catch(() => {
-        // navigate('/erro');
+        navigate('/erro');
 
         toast.error(
           'Ocorreu um erro ao carregar o fato! Reinicie a página ou reporte o bug.',
           toastOptions,
         );
       });
+  };
+
+  const getFactUrl = () => {
+    const url = window.location.href;
+
+    if (url.includes('?fact=')) {
+      return url;
+    }
+
+    return `${window.location.href}?fact=${fact?.id}`;
   };
 
   useEffect(() => {
@@ -84,7 +137,125 @@ const Home = () => {
 
   return (
     <ContainerPage>
-      {loading ? <div>skeleton screen</div> : <Fact fact={fact} />}
+      <div></div>
+
+      <ContainerFact>
+        {loading ? (
+          <>
+            <Skeleton variant="text" width={'100%'} height={30} />
+            <Skeleton
+              variant="text"
+              width={100}
+              style={{ alignSelf: 'flex-start' }}
+              height={30}
+            />
+          </>
+        ) : (
+          <FactQuote fact={fact} />
+        )}
+      </ContainerFact>
+
+      <ContainerButtons>
+        <Button onClick={handleOpenSubmitFact}>
+          <TungstenIcon style={{ transform: 'rotate(180deg)' }} />
+          <p>Enviar um fato</p>
+        </Button>
+
+        <Button iconButton onClick={handleOpenBugReport}>
+          <BugReportIcon />
+        </Button>
+
+        <Button iconButton onClick={handleOpenShare}>
+          <ShareIcon />
+        </Button>
+      </ContainerButtons>
+
+      <Modal
+        open={openShare}
+        onClose={handleCloseShare}
+        aria-labelledby="modal-share-title"
+        aria-describedby="modal-share-description"
+      >
+        <Box sx={style}>
+          <h3>Compartilhar</h3>
+          <br />
+
+          <ContainerShareButtons>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://twitter.com/intent/tweet?url=${getFactUrl()}&text=${
+                fact?.message
+              }`}
+            >
+              <Button iconButton>
+                <TwitterIcon />
+              </Button>
+            </a>
+
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`http://www.facebook.com/sharer.php?u=${getFactUrl()}`}
+            >
+              <Button iconButton>
+                <FacebookIcon />
+              </Button>
+            </a>
+
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`whatsapp://send?text=${fact?.message} ${getFactUrl()}`}
+              data-action="share/whatsapp/share"
+            >
+              <Button iconButton>
+                <WhatsAppIcon />
+              </Button>
+            </a>
+
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://t.me/share/url?url=${getFactUrl()}&text=${
+                fact?.message
+              }`}
+            >
+              <Button iconButton>
+                <TelegramIcon />
+              </Button>
+            </a>
+          </ContainerShareButtons>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openBugReport}
+        onClose={handleCloseBugReport}
+        aria-labelledby="modal-bug-report-title"
+        aria-describedby="modal-bug-report-description"
+      >
+        <Box sx={style}>
+          <h3>Reportar um bug ou feedback</h3>
+          <br />
+
+          <SubmitBugForm />
+        </Box>
+      </Modal>
+
+      <Modal
+        open={submitFact}
+        onClose={handleCloseSubmitFact}
+        aria-labelledby="modal-submit-fact-title"
+        aria-describedby="modal-submit-fact-description"
+      >
+        <Box sx={style}>
+          <h3>Enviar um fato</h3>
+          <br />
+
+          <SubmitFactForm />
+        </Box>
+      </Modal>
     </ContainerPage>
   );
 };
