@@ -16,9 +16,11 @@ import { ContainerPage } from './styles';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 import Button from '../../components/Button';
+import { useUser } from '../../context/UserContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setAccessToken } = useUser();
 
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -47,9 +49,7 @@ const Login = () => {
         password,
       })
       .then(response => {
-        const accessToken = response.data.access_token;
-
-        localStorage.setItem('access_token', accessToken);
+        setAccessToken(response.data.access_token);
 
         toast.success('Senha correta!');
 
