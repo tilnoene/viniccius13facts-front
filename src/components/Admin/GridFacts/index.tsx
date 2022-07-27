@@ -39,27 +39,34 @@ const useStyles = makeStyles({
 });
 
 const GridFacts = ({
-  facts, // tipar fatos
+  facts,
   setFacts,
 }: {
-  facts: any;
-  setFacts: any;
+  facts: Fact[];
+  setFacts: (facts: Fact[]) => void;
 }) => {
   const classes = useStyles();
   const { accessToken } = useUser();
 
-  const [currentFact, setCurrentFact] = useState<any | undefined>(); // TODO: tipar fact aqui tb
+  const [currentFact, setCurrentFact] = useState<Fact | undefined>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
-  // TODO: tipar fact aqui tb
-  const onClickCell = (fact: any) => {
+  const onClickCell = (fact?: Fact) => {
+    if (!fact) {
+      return;
+    }
+
     setCurrentFact(fact);
     handleOpenModal();
   };
 
-  const handleApprove = (fact: any) => {
+  const handleApprove = (fact?: Fact) => {
+    if (!fact) {
+      return;
+    }
+
     api
       .patch(
         `/facts/${fact.id}`,
@@ -75,7 +82,7 @@ const GridFacts = ({
       .then(() => {
         toast.success('O fato foi aprovado!', toastOptions);
 
-        setFacts(facts.filter((myFact: any) => myFact.id !== fact.id)); // TODO: tipar fact
+        setFacts(facts.filter((myFact: Fact) => myFact.id !== fact.id));
         handleCloseModal();
       })
       .catch(() => {
@@ -83,7 +90,11 @@ const GridFacts = ({
       });
   };
 
-  const handleDeny = (fact: any) => {
+  const handleDeny = (fact?: Fact) => {
+    if (!fact) {
+      return;
+    }
+
     api
       .patch(
         `/facts/${fact.id}`,
@@ -99,7 +110,7 @@ const GridFacts = ({
       .then(() => {
         toast.success('O fato foi rejeitado!', toastOptions);
 
-        setFacts(facts.filter((myFact: any) => myFact.id !== fact.id)); // TODO: tipar fact
+        setFacts(facts.filter((myFact: Fact) => myFact.id !== fact.id));
         handleCloseModal();
       })
       .catch(() => {
