@@ -6,13 +6,20 @@ import { ContainerPage } from './styles';
 
 import api from '../../../services/api';
 import { toast } from 'react-toastify';
+import { useUser } from '../../../context/UserContext';
 
 const Dashboard = () => {
-  const [facts, setFacts] = useState<any[]>([]); // TODO: tipar fatos
+  const { accessToken } = useUser();
+
+  const [facts, setFacts] = useState<Fact[]>([]);
 
   const getFacts = () => {
     api
-      .get('/facts?status=PENDING') // TODO: passar token de autorização
+      .get('/facts?status=PENDING', {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
       .then((response: any) => {
         setFacts(response.data);
       })
