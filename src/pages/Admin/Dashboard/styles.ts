@@ -5,9 +5,6 @@ export const ContainerPage = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
-`;
-
-export const ContainerTable = styled.div`
-  height: 600px;
-  width: 80%;
+  align-items: center;
+  padding: 24px 64px;
 `;
