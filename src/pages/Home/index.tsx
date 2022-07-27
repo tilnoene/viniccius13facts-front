@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '../../components/Button';
 import FactQuote from '../../components/FactQuote';
@@ -17,6 +17,8 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import CasinoIcon from '@mui/icons-material/Casino';
+import InfoIcon from '@mui/icons-material/Info';
 
 import {
   ContainerButtons,
@@ -28,23 +30,6 @@ import { Modal, Skeleton } from '@mui/material';
 import { Box } from '@mui/system';
 import SubmitFactForm from '../../components/SubmitFactForm';
 import SubmitBugForm from '../../components/SubmitBugForm';
-
-type Status = 'PENDING' | 'APPROVED' | 'DENIED';
-
-type Author = {
-  id: string;
-  username: string;
-  url?: string;
-};
-
-type Fact = {
-  id: string;
-  status: Status;
-  message: string;
-  author: Author;
-  created_at: string;
-  updated_at?: string;
-};
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -78,14 +63,18 @@ const Home = () => {
   const handleOpenBugReport = () => setOpenBugReport(true);
   const handleCloseBugReport = () => setOpenBugReport(false);
 
-  const getRandomFact = async () => {
+  const getRandomFact = async (changeUrl = false) => {
+    setLoading(true);
+
     api
       .get('/random_fact')
       .then(response => {
         const apiFact = response.data;
 
         setFact(apiFact);
-        // window.history.pushState('', '', `?fact=${apiFact.id}`); // adicionar o id do fato na URL
+        if (changeUrl) {
+          window.history.pushState('', '', `?fact=${apiFact.id}`); // adicionar id do fato na URL
+        }
 
         setLoading(false);
       })
@@ -137,7 +126,18 @@ const Home = () => {
 
   return (
     <ContainerPage>
-      <div></div>
+      <ContainerButtons>
+        <Link to="/sobre">
+          <Button>
+            <InfoIcon />
+            <p>Sobre</p>
+          </Button>
+        </Link>
+
+        <Button iconButton onClick={handleOpenShare}>
+          <ShareIcon />
+        </Button>
+      </ContainerButtons>
 
       <ContainerFact>
         {loading ? (
@@ -165,8 +165,8 @@ const Home = () => {
           <BugReportIcon />
         </Button>
 
-        <Button iconButton onClick={handleOpenShare}>
-          <ShareIcon />
+        <Button iconButton onClick={() => getRandomFact(true)}>
+          <CasinoIcon />
         </Button>
       </ContainerButtons>
 

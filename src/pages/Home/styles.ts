@@ -5,7 +5,7 @@ export const ContainerPage = styled.div`
   height: 100vh;
 
   display: grid;
-  grid-template-rows: 60px calc(100% - 2 * 60px) 60px;
+  grid-template-rows: 78px calc(100% - 2 * 78px) 78px;
 `;
 
 export const ContainerFact = styled.div`
@@ -20,6 +20,7 @@ export const ContainerButtons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
+  align-items: center;
   gap: 14px;
   padding: 0 14px;
 `;
