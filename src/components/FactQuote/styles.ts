@@ -14,9 +14,20 @@ export const PrimaryText = styled.p`
   text-align: left;
 `;
 
-export const SecondayText = styled.p`
+export const SecondaryText = styled.p`
   color: #747474;
   font-size: 20px;
   padding: 0;
   margin: 0;
+`;
+
+export const ContainerId = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    font-size: 18px;
+  }
 `;
