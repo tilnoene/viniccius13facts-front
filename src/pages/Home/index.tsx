@@ -67,11 +67,12 @@ const Home = () => {
     setLoading(true);
 
     api
-      .get('/random_fact')
+      .get('/facts/random')
       .then(response => {
         const apiFact = response.data;
 
         setFact(apiFact);
+
         if (changeUrl) {
           window.history.pushState('', '', `?fact=${apiFact.id}`); // adicionar id do fato na URL
         }
@@ -186,7 +187,7 @@ const Home = () => {
               rel="noreferrer"
               href={`https://twitter.com/intent/tweet?url=${getFactUrl()}&text=${
                 fact?.message
-              }`}
+              } @${fact?.author?.username}`}
             >
               <Button iconButton>
                 <TwitterIcon />
