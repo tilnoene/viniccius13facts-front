@@ -13,7 +13,7 @@
     },
     {
       "id": "2",
-      "status": "PENDING",
+      "status": "DENIED",
       "message": "Viníccius13 não testa.",
       "author": {
         "username": "tilnoene",
@@ -21,10 +21,78 @@
       },
       "created_at": "Wed Jul 21 2022 21:25:31 GMT-0300",
       "updated_at": "Wed Jul 21 2022 21:25:31 GMT-0300"
+    },
+    {
+      "message": "Esse é um fato teste2 ste2 ste2 ste2 ste2 ste2 ste2 ste2 ste2",
+      "author": {
+        "name": "Victor Manuel",
+        "username": "tilnoene"
+      },
+      "status": "APPROVED",
+      "id": "aM9v5Ve"
+    },
+    {
+      "message": "Esse é um fato teste",
+      "author": {
+        "name": "Victor Manuel",
+        "username": "tilnoene"
+      },
+      "status": "APPROVED",
+      "id": "W4G_29C"
+    },
+    {
+      "message": "Esse é um fato teste do que estou fazendo",
+      "author": {
+        "name": "Victor Manuel",
+        "username": "tilnoenebr"
+      },
+      "status": "DENIED",
+      "id": "rWOYTYH"
+    },
+    {
+      "message": "Esse é um fato teste do que estou fazendo",
+      "author": {
+        "name": "Victor Manuel",
+        "username": "tilnoenebr"
+      },
+      "status": "DENIED",
+      "id": "jaR02E_"
+    },
+    {
+      "message": "teste",
+      "author": {
+        "username": "nathaliachata",
+        "url": "https://twitter.com/nathaliachata"
+      },
+      "id": "K3VuSul"
+    },
+    {
+      "message": "mensagem certa",
+      "author": {
+        "username": "fhgfgfd",
+        "url": "https://twitter.com/fhgfgfd"
+      },
+      "id": "3IzPW4M"
+    },
+    {
+      "message": "Viniccius13 não joga dados",
+      "author": {
+        "username": "tilnoene",
+        "url": "https://twitter.com/tilnoene"
+      },
+      "id": "KN1HMwa"
     }
   ],
-  "bugs": [],
-  "login": {
-    "password": "sadassadsa"
+  "bugs": [
+    {
+      "message": "teste",
+      "author": {
+        "username": "nathaliachata"
+      },
+      "id": 1
+    }
+  ],
+  "auth/login": {
+    "password": "senhasecreta"
   }
 }
