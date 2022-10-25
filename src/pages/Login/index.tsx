@@ -45,7 +45,7 @@ const Login = () => {
     setPassword('');
 
     api
-      .post('/login', {
+      .post('/auth/login', {
         password,
       })
       .then(response => {
