@@ -1,4 +1,4 @@
-import { ToastOptions } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 
 export const toastOptions: ToastOptions = {
   position: 'top-right',
@@ -9,3 +9,20 @@ export const toastOptions: ToastOptions = {
   draggable: true,
   progress: undefined,
 };
+
+export const copyTextToClipboard = (text: string) => {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      toast.success('ID copiado com sucesso!', toastOptions);
+    })
+    .catch(() => {
+      toast.error('Ocorreu um erro ao copiar o ID!', toastOptions);
+    });
+};
+
+export const factStatus = [
+  'PENDING',
+  'APPROVED',
+  'DENIED',
+];
