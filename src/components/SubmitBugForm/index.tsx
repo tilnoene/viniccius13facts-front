@@ -42,7 +42,7 @@ const SubmitBugForm = () => {
         },
       })
       .then(() => {
-        toast.success('Sua mensagem foi enviado para análise! Obrigado.', toastOptions);
+        toast.success('Sua mensagem foi enviada para análise! Obrigado.', toastOptions);
 
         setUsername('');
         setMessage('');
