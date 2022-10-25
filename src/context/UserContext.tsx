@@ -33,7 +33,7 @@ export const useUser = () => {
 
   const { accessToken, setAccessToken } = context;
 
-  return { accessToken, setAccessToken };
+  return { accessToken: `Bearer ${accessToken}`, setAccessToken };
 };
 
 export default UserProvider;
