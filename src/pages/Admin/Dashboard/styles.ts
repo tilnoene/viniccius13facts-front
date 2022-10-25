@@ -7,4 +7,14 @@ export const ContainerPage = styled.div`
   justify-content: center;
   align-items: center;
   padding: 24px 64px;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const ContainerInputs = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
 `;
